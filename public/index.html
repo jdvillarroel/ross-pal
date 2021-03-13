@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Firebase Test</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="css/styles.css">
+
+</head>
+<body>
+    <nav class="navbar navbar-expand-md navbar-dark bg-primary">
+        <div class="container-sm">
+          <a class="navbar-brand" href="#">Ross Bank</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0 mt-2 mt-md-0">
+              <li class="nav-item">
+                <a class="nav-link active text-end" aria-current="page" href="#" id="signup">Registrarse</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active text-end" href="#" id="signin">Ingresar</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active text-end" href="#" id="signout">Salir</a>
+              </li>                        
+            </ul>            
+          </div>
+        </div>
+      </nav>
+
+      <!-- Sign up Modal -->
+      <div class="modal fade" id="signup-modal" tabindex="-1" aria-labelledby="signupModal" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="signupModalTitle">Forma de Registro</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form id="signup-form">
+                <div class="mb-3">
+                  <label for="first-name" class="col-form-label">Primer Nombre</label>
+                  <input type="text" class="form-control" id="fName" name="fName">
+                </div>
+                <div class="mb-3">
+                  <label for="lName" class="col-form-label">Primer Apellido</label>
+                  <input type="text" class="form-control" id="lName" name="lName">
+                </div>
+                <div class="mb-3">
+                  <label for="signup-email" class="col-form-label">Correo</label>
+                  <input type="email" class="form-control" id="signup-email" name="email">
+                </div>
+                <div class="mb-3">
+                  <label for="signup-password" class="col-form-label">Clave Secreta</label>
+                  <input type="password" class="form-control" id="signup-password" name="password">
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="signup-btn-close">Cerrar</button>
+              <button type="button" class="btn btn-primary" id="signup-btn">Registrase</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sign in Modal -->
+      <div class="modal fade" id="signin-modal" tabindex="-1" aria-labelledby="sign-in-modal" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="signinModalTitle">Entrar a Cuenta</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form id="signin-form">
+                <div class="mb-3">
+                  <label for="signin-email" class="col-form-label">Correo</label>
+                  <input type="email" class="form-control" id="signin-email" name="email">
+                </div>
+                <div class="mb-3">
+                  <label for="signin-password" class="col-form-label">Clave</label>
+                  <input type="password" class="form-control" id="signin-password" name="password">
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="signin-btn-close">Cerrar</button>
+              <button type="button" class="btn btn-primary" id="signin-btn">Entrar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="container-sm mt-3">
+        <div class="text-center text-md-start">
+          <h1 class="display-4 ">Bienvenido</h1>
+          <p id="loggedUser" class="fs-6"></p>
+
+        </div>
+        
+        <div id="reg-content" style="display: none">
+
+          <!-- Account Balance card -->
+          <div class="card text-center custom-card" id="balance-card">
+            <div class="card-body">
+              <h5 class="card-title">Balance de Cuenta</h5>
+              <h6 class="card-subtitle mb-2 text-muted">Monto Disponible en VUSD</h6>
+              <p class="card-text fs-3 fw-bold text-white" id="balance-available"></p>
+            </div>
+          </div>
+
+          <div class="my-3 custom-form">
+            <form id="transaction-form">
+              <div class="mb-3">
+                <select class="form-select" aria-label="Default select example">
+                  <option selected>Enviar dinero a...</option>
+                  <option value="1">Manuel</option>
+                  <option value="2">Kristy</option>
+                  <option value="3">Otro no Registrado</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="description" class="col-form-label">Descripcion</label>
+                <textarea class="w-100" name="description" id="description" cols="40" rows="2"></textarea>
+              </div>
+              <div class="mb-3">
+                <label for="to-email" class="col-form-label">Correo de quien recibe</label>
+                <input type="email" class="form-control" id="to-email" name="email">
+              </div>
+              <div class="mb-3">
+                <label for="amount" class="col-form-label">Monto a Enviar</label>
+                <input type="number" class="form-control" id="amount" name="amount" step="0.01" min="0">
+              </div>
+              <button type="reset" class="btn btn-outline-primary">Limpiar</button>
+              <button type="submit" class="btn btn-primary" id="send-btn">Enviar</button>
+            </form>
+          </div>
+
+        </div>
+        
+
+
+      </div>
+      
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-storage.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+
+
+  <script src="js/index.js"></script>
+  <script src="js/fb.js"></script>
+</body>
+</html>
