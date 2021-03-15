@@ -15,8 +15,5 @@
   "bugs": {
     "url": "https://github.com/jdvillarroel/ross-pal/issues"
   },
-  "homepage": "https://github.com/jdvillarroel/ross-pal#readme",
-  "dependencies": {
-    "dotenv": "^8.2.0"
-  }
+  "homepage": "https://github.com/jdvillarroel/ross-pal#readme"
 }

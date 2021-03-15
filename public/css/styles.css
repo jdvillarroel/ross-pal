@@ -14,3 +14,7 @@ body {
 	margin-left: auto;
 	margin-right: auto;
 }
+
+.navbar-brand span {
+	margin-left: 0.5rem;
+}
