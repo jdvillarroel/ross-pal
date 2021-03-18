@@ -34,6 +34,16 @@ const handleSignInModalClose = () => {
     signInModal.hide();
 };
 
+const createUser = (user, userInfo) => {
+    return db.collection("users").doc(userCredential.user.uid).set({
+        firstName: userInfo.fName,
+        lastName: userInfo.lName,
+        email: userInfo.email,
+        createdAt: new Date(),
+        type: "regUser"
+    })
+}
+
 // ************* Events Listeners *************** //
 
 // Show sign up modal form.
@@ -52,20 +62,39 @@ signIn.addEventListener("click", (e) => {
 signUpBtn.addEventListener("click", (e) => {
     e.preventDefault();
 
-    const fName = signUpForm.fName.value;
-    const lName = signUpForm.lName.value;
-    const email = signUpForm.email.value;
-    const password = signUpForm.password.value;
+    const userInfo = {
+        fName: signUpForm.fName.value,
+        lName: signUpForm.lName.value,
+        email: signUpForm.email.value,
+        password: signUpForm.password.value
+    }
+    // const fName = signUpForm.fName.value;
+    // const lName = signUpForm.lName.value;
+    // const email = signUpForm.email.value;
+    // const password = signUpForm.password.value;
 
-    if (fName.length === 0 || lName.length === 0 || email.length === 0 || password.length === 0) {
+    if (userInfo.fName.length === 0 || userInfo.lName.length === 0 || userInfo.email.length === 0 || userInfo.password.length === 0) {
         console.log("Can't proceed. Check your input data.");
     } else {
-        auth.createUserWithEmailAndPassword(email, password)
+        auth.createUserWithEmailAndPassword(userInfo.email, userInfo.password)
         .then((userCredential) => {
-            handleSignUpModalClose();
+            return db.collection("users").doc(userCredential.user.uid).set({
+                firstName: userInfo.fName,
+                lastName: userInfo.lName,
+                email: userInfo.email,
+                createdAt: new Date()
+            }), userCredential.user;
+            
         })
+        .then((user) => {
+            return db.collection("accounts").doc(user.uid).set({
+                balance: 135.49,
+                transQty: 0
+            });
+        })
+        .then(handleSignUpModalClose())
         .catch(err => {
-            console.log(err.code, err.message);
+            console.log(err.message);
         });
     }
     
@@ -120,7 +149,6 @@ window.onload = () => {
         if (user) {
             setupUI(user);
             console.log("User logged in");
-            console.log(`${user.uid} - ${user.email}`);
         } else {
             setupUI(null);
             console.log("User logged out");
