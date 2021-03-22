@@ -38,6 +38,8 @@ const signInBtnClose = document.querySelector("#signin-btn-close");
 // ************ Forms ******************* //
 const signUpForm = document.querySelector("#signup-form");
 const signInForm = document.querySelector("#signin-form");
+const transactionForm = document.querySelector("#transaction-form");
+const sendBtn = document.querySelector("#send-btn");
 
 // ************ Balance Card **************** //
 const balanceAvailable = document.querySelector("#balance-available");
@@ -46,17 +48,17 @@ const balanceAvailable = document.querySelector("#balance-available");
 
 // ***************** Functions ********************* //
 
-const setupUI = (user) => {
+const setupUI = (user, account) => {
     if (user) {
 
         regContent.style.display = "block";
         loggedUser.textContent = `Usuario: ${user.email}`;
-        //balanceAvailable.textContent = `$ ${account.balance}`;
+        balanceAvailable.textContent = `$ ${account.balance}`;
 
     } else {
         loggedUser.textContent = "";
         regContent.style.display = "none";
-        //balanceAvailable.textContent = "";
+        balanceAvailable.textContent = "";
     }
 };
 

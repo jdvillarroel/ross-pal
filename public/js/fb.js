@@ -88,8 +88,8 @@ signUpBtn.addEventListener("click", (e) => {
         })
         .then((user) => {
             return db.collection("accounts").doc(user.uid).set({
-                balance: 135.49,
-                transQty: 0
+                balance: 0,
+                transactions: [{}]
             });
         })
         .then(handleSignUpModalClose())
@@ -97,6 +97,45 @@ signUpBtn.addEventListener("click", (e) => {
             console.log(err.message);
         });
     }
+    
+});
+
+// Send money form
+sendBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+
+    const amount = transactionForm.amount.value;
+    const to = transactionForm.email.value;
+    const description = transactionForm.description.value;
+    let user = auth.currentUser;
+    let userID = user.uid;
+
+    db.collection("accounts").doc(userID).get()
+    .then((account) => {
+        let balance = account.data().balance;
+        let transactions = account.data().transactions;
+
+        if (amount <= account.data().balance) {
+            return db.collection("accounts").doc(userID).update({
+                balance: (balance - amount),
+                transactions: [...transactions, {
+                    to: to,
+                    amount: amount,
+                    date: new Date(),
+                    description: description
+                }]
+            })
+        } else {
+            console.log("Not enough funds to this transaction.");
+        }
+    })
+    .then(() => {
+        console.log("Sent successfully!");
+    })
+    .catch(err => console.log(err.message));
+
+    
+    transactionForm.reset();
     
 });
 
@@ -146,14 +185,26 @@ function setupUser(user) {
 window.onload = () => {
     // ************ Auth Realtime Listener ********* //
     auth.onAuthStateChanged((user) => {
+        
+
         if (user) {
-            setupUI(user);
+            // let unsubscribe = db.collection("accounts").doc(auth.currentUser.uid).onSnapshot((account) => {
+            //     setupUI(user, account);
+            // });
+
+            const accountPromise = getUserData(user.uid);
+            accountPromise.then((account => {
+                setupUI(user, account)
+            }));
+            //setupUI(user);
             console.log("User logged in");
         } else {
-            setupUI(null);
+            unsubscribe();
+            setupUI(null, null);
             console.log("User logged out");
         }
     });
+
 }
 
 
