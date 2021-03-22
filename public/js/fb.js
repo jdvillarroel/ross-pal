@@ -188,9 +188,6 @@ window.onload = () => {
         
 
         if (user) {
-            // let unsubscribe = db.collection("accounts").doc(auth.currentUser.uid).onSnapshot((account) => {
-            //     setupUI(user, account);
-            // });
 
             const accountPromise = getUserData(user.uid);
             accountPromise.then((account => {
@@ -199,7 +196,6 @@ window.onload = () => {
             //setupUI(user);
             console.log("User logged in");
         } else {
-            unsubscribe();
             setupUI(null, null);
             console.log("User logged out");
         }
