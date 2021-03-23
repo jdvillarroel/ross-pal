@@ -89,7 +89,7 @@ signUpBtn.addEventListener("click", (e) => {
         .then((user) => {
             return db.collection("accounts").doc(user.uid).set({
                 balance: 0,
-                transactions: [{}]
+                transactions: []
             });
         })
         .then(handleSignUpModalClose())
@@ -117,7 +117,7 @@ sendBtn.addEventListener("click", (e) => {
 
         if (amount <= account.data().balance) {
             return db.collection("accounts").doc(userID).update({
-                balance: (balance - amount),
+                balance: parseFloat((balance - amount).toFixed(2)),
                 transactions: [...transactions, {
                     to: to,
                     amount: amount,
@@ -126,11 +126,13 @@ sendBtn.addEventListener("click", (e) => {
                 }]
             })
         } else {
-            console.log("Not enough funds to this transaction.");
+            console.log("Not enough funds to do this transaction.");
         }
     })
     .then(() => {
-        console.log("Sent successfully!");
+        // return db.collection("accounts").doc(userID).onSnapshot((account) => {
+        //     setupUI(user, account.data());
+        // });
     })
     .catch(err => console.log(err.message));
 
@@ -155,7 +157,7 @@ signInBtn.addEventListener("click", (e)=> {
 
     auth.signInWithEmailAndPassword(email, password)
     .then((user) => {
-        setupUser(user);
+        // setupUser(user);
         handleSignInModalClose();
     })
     .catch(err => {
@@ -185,14 +187,15 @@ function setupUser(user) {
 window.onload = () => {
     // ************ Auth Realtime Listener ********* //
     auth.onAuthStateChanged((user) => {
-        
 
         if (user) {
-
-            const accountPromise = getUserData(user.uid);
-            accountPromise.then((account => {
-                setupUI(user, account)
-            }));
+            db.collection("accounts").doc(user.uid).onSnapshot((account) => {
+                setupUI(user, account.data());
+            });
+            // const accountPromise = getUserData(user.uid);
+            // accountPromise.then((account => {
+            //     setupUI(user, account)
+            // }));
             //setupUI(user);
             console.log("User logged in");
         } else {

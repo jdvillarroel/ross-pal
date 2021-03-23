@@ -122,22 +122,25 @@
 
           <div class="my-3 custom-form">
             <form id="transaction-form">
-              <div class="mb-3">
+              <div class="my-2">
+                <h5>Enviar dinero a:</h6>
+              </div>
+              <!-- <div class="mb-3">
                 <select class="form-select" aria-label="Default select example">
                   <option selected>Enviar dinero a...</option>
                   <option value="1">Manuel</option>
                   <option value="2">Kristy</option>
                   <option value="3">Otro no Registrado</option>
                 </select>
-              </div>
-              <div class="mb-3">
-                <label for="description" class="col-form-label">Descripcion</label>
-                <textarea class="w-100" name="description" id="description" cols="40" rows="2"></textarea>
-              </div>
+              </div> -->
               <div class="mb-3">
                 <label for="to-email" class="col-form-label">Correo de quien recibe</label>
                 <input type="email" class="form-control" id="to-email" name="email">
               </div>
+              <div class="mb-3">
+                <label for="description" class="col-form-label">Descripcion</label>
+                <textarea class="w-100" name="description" id="description" cols="40" rows="2"></textarea>
+              </div>              
               <div class="mb-3">
                 <label for="amount" class="col-form-label">Monto a Enviar</label>
                 <input type="number" class="form-control" id="amount" name="amount" step="0.01" min="0">
