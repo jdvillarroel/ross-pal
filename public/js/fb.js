@@ -1,26 +1,3 @@
-// const signUp = document.querySelector("#signup");
-// const signIn = document.querySelector("#signin");
-// const signOut = document.querySelector("#signout");
-
-// const dashboardLink = document.querySelector("#dashboardLink");
-// const loggedUser = document.querySelector("#loggedUser");
-// const content = document.querySelector("#content");
-
-// // ************* Modals ***************** //
-// const signUpModal = new bootstrap.Modal(document.querySelector("#signup-modal"), {keyboard: true});
-// const signUpBtn = document.querySelector("#signup-btn");
-// const signUpBtnClose = document.querySelector("#signup-btn-close");
-// const signInModal = new bootstrap.Modal(document.querySelector("#signin-modal"), {keyboard: true});
-// const signInBtn = document.querySelector("#signin-btn");
-// const signInBtnClose = document.querySelector("#signin-btn-close");
-
-// // ************ Forms ******************* //
-// const signUpForm = document.querySelector("#signup-form");
-// const signInForm = document.querySelector("#signin-form");
-
-// // ************ References to database ********* //
-// const auth = firebase.auth;
-// const db = firebase.firestore();
 
 
 // *********** Functions *************** //
@@ -68,10 +45,6 @@ signUpBtn.addEventListener("click", (e) => {
         email: signUpForm.email.value,
         password: signUpForm.password.value
     }
-    // const fName = signUpForm.fName.value;
-    // const lName = signUpForm.lName.value;
-    // const email = signUpForm.email.value;
-    // const password = signUpForm.password.value;
 
     if (userInfo.fName.length === 0 || userInfo.lName.length === 0 || userInfo.email.length === 0 || userInfo.password.length === 0) {
         console.log("Can't proceed. Check your input data.");
@@ -205,35 +178,3 @@ window.onload = () => {
     });
 
 }
-
-
-
-
-// ************************************ UI Section ***************************** //
-
-// const setupUI = (user) => {
-//     if (user) {
-//         dashboardLink.style.display = "block";
-
-//         const html = `
-//             Usuario: ${user.email}
-//         `;
-
-//         loggedUser.textContent = html;
-//     } else {
-//         loggedUser.textContent = "";
-//         dashboardLink.style.display = "none";
-//     }
-// };
-
-
-
-// const user = userCred.user;
-// const currentDate = new Date();
-
-// return db.collection("users").doc(user.uid).set({
-//     firstName: fName,
-//     lastName: lName,
-//     email: user.email,
-//     dateRegistered: currentDate
-// });
