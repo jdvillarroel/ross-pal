@@ -16,6 +16,9 @@ const auth = firebase.auth();
 const db = firebase.firestore();
 const storage = firebase.storage();
 
+const accountsRef = db.collection("accounts");
+const usersRef = db.collection("users");
+
 // Upadte firestore settings
 db.settings({ timestampsInSnapshots: true });
 
@@ -44,7 +47,8 @@ const sendBtn = document.querySelector("#send-btn");
 // ************ Balance Card **************** //
 const balanceAvailable = document.querySelector("#balance-available");
 
-
+// ************ User account ****************** //
+let userAccount = null;
 
 // ***************** Functions ********************* //
 
