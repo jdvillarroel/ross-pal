@@ -18,6 +18,7 @@ const storage = firebase.storage();
 
 const accountsRef = db.collection("accounts");
 const usersRef = db.collection("users");
+const transactionsRef = db.collection("transactions");
 
 // Upadte firestore settings
 db.settings({ timestampsInSnapshots: true });
@@ -49,6 +50,7 @@ const balanceAvailable = document.querySelector("#balance-available");
 
 // ************ User account ****************** //
 let userAccount = null;
+let transactions = null;
 
 // ***************** Functions ********************* //
 

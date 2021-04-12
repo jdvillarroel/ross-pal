@@ -35,6 +35,13 @@ const withdrawFromAccount = async (amount) => {
     })
 }
 
+// Get transactions
+const getTransactions = async (user) => {
+    let transactions = await transactionsRef.where("to", "==", user.email).get();
+
+    return transactions;
+}
+
 // *********** Functions *************** //
 const handleSignUpModalClose = () => {
     signUpForm.reset();
@@ -166,6 +173,12 @@ auth.onAuthStateChanged((user) => {
         .then(account => {
             userAccount = account;
         });
+
+        // Get transactions
+        getTransactions(user)
+        .then(lastTransactions => {
+            transactions = lastTransactions;
+        })
 
         // Real time listener.
         accountsRef.doc(user.uid).onSnapshot((account) => {
