@@ -59,7 +59,7 @@ const setupUI = (user, account) => {
 
         regContent.style.display = "block";
         loggedUser.textContent = `Usuario: ${user.email}`;
-        balanceAvailable.textContent = `$ ${account.balance}`;
+        balanceAvailable.textContent = `$ ${account.balance.toFixed(2)}`;
 
     } else {
         loggedUser.textContent = "";

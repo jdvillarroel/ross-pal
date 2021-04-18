@@ -175,12 +175,16 @@ auth.onAuthStateChanged((user) => {
         });
 
         // Get transactions
-        getTransactions(user)
-        .then(lastTransactions => {
-            transactions = lastTransactions;
+        // getTransactions(user)
+        // .then(lastTransactions => {
+        //     transactions = lastTransactions;
+        // })
+
+        transactionsRef.where("to", "==", user.email).orderBy("date").limit(10).onSnapshot(trans => {
+            transactions = trans;
         })
 
-        // Real time listener.
+        // Real time account listener.
         accountsRef.doc(user.uid).onSnapshot((account) => {
             userAccount = account;
             setupUI(user, account.data());
